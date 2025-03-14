@@ -73,7 +73,8 @@ public class RisingText extends HText {
         duration = (long) (charTime + charTime / mostCount * (n - 1));
         animator.cancel();
         animator.setFloatValues(0, 1);
-        animator.setDuration(doAnimate ? duration : 1);
+ //       animator.setDuration(doAnimate ? duration : 1);
+        animator.setDuration(doAnimate ? 800 : 1);
         animator.start();
     }
 
