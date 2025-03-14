@@ -29,6 +29,6 @@ public abstract class HTextView extends TextView {
 
     public abstract void setProgress(float progress);
 
-    public abstract void animateText(CharSequence text);
+    public abstract void animateText(CharSequence text,boolean doAnimate);
 
 }

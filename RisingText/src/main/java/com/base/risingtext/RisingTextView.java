@@ -45,8 +45,8 @@ public class RisingTextView extends HTextView {
     }
 
     @Override
-    public void animateText(CharSequence text) {
-        risingText.animateText(text);
+    public void animateText(CharSequence text,boolean doAnimate) {
+        risingText.animateText(text,doAnimate);
     }
 
     @Override

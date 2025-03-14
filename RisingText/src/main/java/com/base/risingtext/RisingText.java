@@ -18,6 +18,7 @@ public class RisingText extends HText {
     private List<CharacterDiffResult> differentList = new ArrayList<>();
     private long duration;
     private ValueAnimator animator;
+    private boolean hasAnimation = false;
 
     @Override
     public void init(HTextView hTextView, AttributeSet attrs, int defStyle) {
@@ -28,7 +29,7 @@ public class RisingText extends HText {
         animator.addListener(new DefaultAnimatorListener() {
             @Override
             public void onAnimationEnd(Animator animation) {
-                if (animationListener != null) {
+                if (animationListener != null && hasAnimation) {
                     animationListener.onAnimationEnd(mHTextView);
                 }
             }
@@ -46,7 +47,7 @@ public class RisingText extends HText {
     }
 
     @Override
-    public void animateText(final CharSequence text) {
+    public void animateText(final CharSequence text,boolean doAnimate) {
         mHTextView.post(new Runnable() {
             @Override
             public void run() {
@@ -54,7 +55,7 @@ public class RisingText extends HText {
                     return;
                 }
                 oldStartX = mHTextView.getLayout().getLineLeft(0);
-                RisingText.super.animateText(text);
+                RisingText.super.animateText(text,doAnimate);
             }
         });
     }
@@ -65,13 +66,14 @@ public class RisingText extends HText {
     }
 
     @Override
-    protected void animateStart(CharSequence text) {
+    protected void animateStart(CharSequence text,boolean doAnimate) {
+        hasAnimation = doAnimate;
         int n = mText.length();
         n = n <= 0 ? 1 : n;
         duration = (long) (charTime + charTime / mostCount * (n - 1));
         animator.cancel();
         animator.setFloatValues(0, 1);
-        animator.setDuration(duration);
+        animator.setDuration(doAnimate ? duration : 1);
         animator.start();
     }
 
