@@ -2,6 +2,7 @@ package com.base.risingtext;
 
 import android.animation.Animator;
 import android.animation.ValueAnimator;
+import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Rect;
 import android.util.AttributeSet;
@@ -19,11 +20,17 @@ public class RisingText extends HText {
     private long duration;
     private ValueAnimator animator;
     private boolean hasAnimation = false;
+    private float animationDuration = 1000f;
 
     @Override
     public void init(HTextView hTextView, AttributeSet attrs, int defStyle) {
         super.init(hTextView, attrs, defStyle);
         super.init(hTextView, attrs, defStyle);
+        if (attrs != null) {
+            TypedArray typedArray = hTextView.getContext().obtainStyledAttributes(attrs, R.styleable.RisingTextView);
+            animationDuration = typedArray.getFloat(R.styleable.RisingTextView_rtDuration, 1000);
+            typedArray.recycle();
+        }
         animator = new ValueAnimator();
         animator.setInterpolator(new AccelerateDecelerateInterpolator());
         animator.addListener(new DefaultAnimatorListener() {
@@ -74,7 +81,7 @@ public class RisingText extends HText {
         animator.cancel();
         animator.setFloatValues(0, 1);
  //       animator.setDuration(doAnimate ? duration : 1);
-        animator.setDuration(doAnimate ? 800 : 1);
+        animator.setDuration(doAnimate ? (long)(animationDuration) : 1);
         animator.start();
     }
 
